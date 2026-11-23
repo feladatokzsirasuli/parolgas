@@ -108,7 +108,7 @@ let diakNeve = "";
     const ellenorzoKulcs = diakNeve + "_" + FELADAT_ID;
 
     // Csak azt nézzük, hogy EZT a feladatot beadta-e már EZ a név
-    adatbazis.ref('eredmenyek').orderByChild('nev_feladat').equalTo(ellenorzoKulcs).once('value')
+    adatbazis.ref('Szorgalmi').orderByChild('nev_feladat').equalTo(ellenorzoKulcs).once('value')
       .then(snapshot => {
         if (snapshot.exists()) {
           alert("Figyelem! Ezt a konkrét feladatsort ezzel a névvel (" + diakNeve + ") már egyszer beküldted! Gyakorolni szabad, de új pontszámot nem rögzítek.");
@@ -143,8 +143,7 @@ let diakNeve = "";
             Mielőtt hozzáfognál a feladatokhoz, kérlek olvasd el figyelmesen a szabályokat:
           </p>
           <ul style="margin: 15px 0; padding-left: 20px; color: #444; font-size: 14px; line-height: 1.6;">
-            <li style="margin-bottom: 8px;">Minden egyes feladat megoldása után rá <strong>KELL</strong> kattintanod az <strong>Ellenőrzés</strong> gombra!</li>
-            <li style="margin-bottom: 8px;">Az Ellenőrzés gomb megnyomása után a válaszod rögzül, azt utólag már <strong>NEM lehet módosítani</strong>!</li>
+            <li style="margin-bottom: 8px;">Ha rákattintasz egy válaszra, akkor azon már nem fogsz tudni változtatni</li>
             <li style="margin-bottom: 8px;">A pontjaidat a rendszer automatikusan küldi a tanári naplóba, amint az összes feladatot leellenőrizted.</li>
           </ul>
           <div style="text-align: center; margin-top: 25px;">
@@ -229,15 +228,15 @@ let diakNeve = "";
 
             // A VÉGLEGES ADATCSOMAG: A 'nev' teljesen tiszta marad!
             const vegsoEredmeny = {
-              name: diakNeve,                        // <--- TISZTA NÉV (pl. Kovács Péter)
+              name: diakNeve,                        // <--- TISZTA NÉV 
               feladat_id: FELADAT_ID,
               nev_feladat: diakNeve + "_" + FELADAT_ID, // <--- Csak a háttérszűréshez!
               score: vegsoElertPont, 
-              feladat: "Párolgás, forrás, lecsapódás",
+              feladat: "Elektrosztatika",
               idobelyeg: new Date().toLocaleString("hu-HU")
             };
 
-            adatbazis.ref('eredmenyek').push(vegsoEredmeny)
+            adatbazis.ref('Szorgalmi').push(vegsoEredmeny)
               .then(() => {
                 console.log("Sikeres mentés a Firebase-be!");
                 alert("Köszönöm! A teljes feladatsort befejezted. A végső elért pontszámodat (" + vegsoElertPont + ") sikeresen rögzítettem a naplóba.\\n\\nMostantól átnézheted a hibáidat a feladatok alatt!");
